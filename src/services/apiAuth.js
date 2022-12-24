@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://kapusta-backend.goit.global';
+axios.defaults.validateStatus();
 
 export const registerAPI = async user => {
   try {
@@ -29,7 +30,11 @@ export const logoutAPI = async () => {
 
 export const googleLoginAPI = async () => {
   try {
-    const response = await axios.get('auth/google');
+    const response = await axios.get('/auth/google', {
+      headers: {
+        accept: '*/*',
+      },
+    });
     console.log('response', response);
     return response;
   } catch (error) {
@@ -37,7 +42,7 @@ export const googleLoginAPI = async () => {
   }
 };
 
-export const refreshUserAPI = async () => {
+export const fullUserInfoAPI = async () => {
   try {
     const { data } = await axios.get('user');
     return data;

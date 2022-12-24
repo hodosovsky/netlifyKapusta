@@ -1,22 +1,24 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateBalanceAPI } from '../../services/apiTransactions';
+import {useSelector, useDispatch } from 'react-redux';
+import { updateBalance } from '../../redux/transactions/operations';
 import { StyledForm } from './Styles';
 
 const ChangeBalance = () => {
-  const [balance, setBalance] = useState('');
+  const stateBalance = useSelector(state => state.transactions.newBalance);  
+  const [balance, setBalance] = useState(stateBalance);
   const dispatch = useDispatch();
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    dispatch(updateBalanceAPI({newBalance: balance}))
-    // прослідкувати щоб відправлялось число
+    dispatch(updateBalance({ newBalance: balance }));
     setBalance('');
   };
   const handleChange = evt => {
     evt.preventDefault();
-    setBalance(evt.target.value);
+    if (!Number(evt.target.value.slice(0, -7))) return;
+    setBalance(Number(evt.target.value.slice(0, -7)));
   };
+  const handleValue = balance + '.00 UAH';
 
   return (
     <StyledForm onSubmit={handleSubmit}>
@@ -26,10 +28,10 @@ const ChangeBalance = () => {
         type="text"
         name="balance"
         title="Please, enter your balance"
-        // вказати регулярний вираз - маску грошового формату
+        pattern="[0-9, .UAH]*"
         placeholder="00.00 UAH"
         onChange={handleChange}
-        value={balance}
+        value={handleValue}
         required
       />
       <button type="submit" className="btn">

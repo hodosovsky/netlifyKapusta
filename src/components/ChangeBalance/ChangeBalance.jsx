@@ -17,7 +17,7 @@ const ChangeBalance = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    dispatch(updateBalance({ newBalance: evt.target.balance.value }));
+    dispatch(updateBalance({ newBalance: balance }));
   };
 
   const handleChange = evt => {
@@ -36,20 +36,20 @@ const ChangeBalance = () => {
         <h2 className="title">Balance:</h2>
         <input
           className="inputTag"
-          type="number"
+          type="text"
           name="balance"
           title="Please, enter your balance"
           pattern="[0-9, .UAH]*"
-          placeholder={`${stateBalance}.00 UAH`}
-          // onChange={handleChange}
-          // value={handleValue}
+          placeholder="00.00 UAH"
+          onChange={handleChange}
+          value={handleValue}
           required
         />
         <button type="submit" className="btn">
           Confirm
         </button>
       </StyledForm>
-      {!stateBalance && <ModalWindow />}
+      {!balance && <ModalWindow />}
     </>
   );
 };

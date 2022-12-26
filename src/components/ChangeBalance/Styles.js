@@ -26,7 +26,7 @@ export const StyledForm = styled.form`
     font-weight: 700;
     width: 140px;
     padding: 12px 18px;
-    color: #52555f;
+    color: #000;
     text-align: right;
     border: 2px solid white;
     border-radius: 22px 0 0 22px;
@@ -39,6 +39,12 @@ export const StyledForm = styled.form`
     :focus {
       background-color: #fff;
     }
+
+    &::placeholder {
+      color: #000;
+      /* padding-right: 18px; */
+    }
+
     @media screen and (min-width: 768px) {
       width: 125px;
       padding: 12px 20px;
